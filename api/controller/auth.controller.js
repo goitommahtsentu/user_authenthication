@@ -3,18 +3,11 @@ import pool from '../db.js';
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import nodemailer from "nodemailer";
-import crypto from 'crypto'; // Ensure you import your database pool
 import dotenv from 'dotenv';
-
-
 dotenv.config();
-
-
 export const signup = async (req, res, next) => {
     const {username, email, password} = req.body;
-    console.log(req.body);
-    const hashedPassword = await bcrypt.hash(password, 10); // Consider using hash instead of hashSync for async operation
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     try {
         const query = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3)';
         await pool.query(query, [username, email, hashedPassword]);
@@ -25,11 +18,8 @@ export const signup = async (req, res, next) => {
 };
 
 
-
-
 export const signin = async (req, res, next) => {
     const { email, password } = req.body;
-
     try {
         const userQuery = 'SELECT * FROM users WHERE email = $1';
         const userResult = await pool.query(userQuery, [email]);
@@ -100,7 +90,7 @@ export const ForgotPassword=async (req, res,next) => {
 export const ResetPassword= async (req, res) => {
     const {token, newPassword} = req.body;
     try {
-        const payload = jwt.verify(token, 'yourSecretKey');
+        const payload = jwt.verify(token, process.env.JWT_KEY);
         const userId = payload.userId;
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);

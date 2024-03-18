@@ -44,15 +44,22 @@ const SignIn = () => {
 
     return (
         <div className='p-3 max-w-lg mx-auto'>
-            <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
+            <img src="/../public/stove.png" alt="Stove Guard Logo" className="mb-8" />
             <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                 <input type="text" placeholder='Email' id='email'
                        className='border p-3 rounded-large' onChange={handleChange}/>
                 <input type="password" placeholder='Password' id='password'
                        className='border p-3 rounded-large' onChange={handleChange}/>
-                <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-50'>
-                    {loading ? 'Loading...' : 'Sign In'}
-                </button>
+                <div className="flex justify-between items-center">
+                    <a href="/forgot-password" className="text-lg text-indigo-600 hover:underline">Forgot password?</a>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 disabled:opacity-50"
+                    >
+                        {loading ? 'Loading...' : 'Login In'}
+                    </button>
+                </div>
             </form>
             <div className='flex gap-2 mt-5'>
                 <p>Don't have an account?</p>
